@@ -6468,12 +6468,18 @@ const ccWidget = new CoordinateConversion({
 view.ui.add(ccWidget, "bottom-left");
 
 graphicsLayer = new GraphicsLayer();
-map.add(graphicsLayer);  
+lineGraphicsLayer = new GraphicsLayer();
+map.add(graphicsLayer);
+map.add(lineGraphicsLayer);  
 point = {
   type: "point", // autocasts as new Point()
   longitude: 0,
   latitude: 0
 };
+polyline = {
+          type: "polyline", // autocasts as new Polyline()
+          paths: [[0,0,0]]
+        };
 
 		// Create a symbol for drawing the point
 const markerSymbol = {
@@ -6487,19 +6493,41 @@ const markerSymbol = {
   }
 };
 
+let polylineSymbol = {
+  type: "simple-line",  // autocasts as SimpleLineSymbol()
+  color: [255, 255, 0],
+  style: 'dash-dot',
+  width: 2
+};
+
+let polylineGraphic = new Graphic({
+  geometry: polyline,
+  symbol: polylineSymbol
+});
+
+
 pointGraphic = new Graphic({
 	  geometry: point,
 	  symbol: markerSymbol
 	});
+view.graphics.add(polylineGraphic)
 view.graphics.add(pointGraphic)  
-
+var path=[];
 view.on("click",function(event){
   var lat=event.mapPoint.y;
 	var long=event.mapPoint.x;
   var newPointGraphic=pointGraphic.clone();
+  var newLineGraphic=polylineGraphic.clone();
   newPointGraphic.geometry.latitude=lat;
   newPointGraphic.geometry.longitude=long;
+  
+  path.push([long,lat])
+  newLineGraphic.geometry.paths=path;
+
   graphicsLayer.add(newPointGraphic);
+  lineGraphicsLayer.add(newLineGraphic);
+
+
 
 });
 
