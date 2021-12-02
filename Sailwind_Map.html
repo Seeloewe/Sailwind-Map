@@ -57,7 +57,7 @@
     />
     <script src="https://js.arcgis.com/4.21/"></script>
     <script>
-
+  var path=[];
 require([
   "esri/Map",
   "esri/views/MapView",
@@ -6375,7 +6375,7 @@ require([
     }
   ]
   };
-
+  var path=[];
 
 let renderer = {
   type: "unique-value",  // autocasts as new UniqueValueRenderer()
@@ -6500,7 +6500,7 @@ let polylineSymbol = {
   width: 2
 };
 
-let polylineGraphic = new Graphic({
+polylineGraphic = new Graphic({
   geometry: polyline,
   symbol: polylineSymbol
 });
@@ -6510,9 +6510,11 @@ pointGraphic = new Graphic({
 	  geometry: point,
 	  symbol: markerSymbol
 	});
+
+
 view.graphics.add(polylineGraphic)
 view.graphics.add(pointGraphic)  
-var path=[];
+
 view.on("click",function(event){
   var lat=event.mapPoint.y;
 	var long=event.mapPoint.x;
@@ -6539,8 +6541,15 @@ function getCoords(){
 	var lat=document.getElementById("a").value;
 	var long=document.getElementById("b").value;
   var newPointGraphic=pointGraphic.clone();
+  var newLineGraphi=polylineGraphic.clone();
   newPointGraphic.geometry.latitude=lat;
   newPointGraphic.geometry.longitude=long;
+
+    
+  path.push([long,lat])
+  newLineGraphi.geometry.paths=path;
+
+  lineGraphicsLayer.add(newLineGraphi);
   graphicsLayer.add(newPointGraphic);
   document.getElementById("a").value=null;
 	document.getElementById("b").value=null;  
@@ -6549,6 +6558,8 @@ function getCoords(){
 function clearCoords(){
   coords =[]
   graphicsLayer.removeAll();
+  lineGraphicsLayer.removeAll();
+  path=[]
 }
 
 
