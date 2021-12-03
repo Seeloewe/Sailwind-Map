@@ -11374,8 +11374,6 @@ const geojson = {
   ]
   };
 
-
-
 const blob = new Blob([JSON.stringify(geojson)], {
   type: "application/json"
 });
@@ -11597,20 +11595,7 @@ function clearCourse(){}
         <button class="button button3" type="button" onclick="clearCoords()">Clear Coords</button>
 			</form>
 		</div>
-    <div class="B">	
-			<form>
-				<p>
-					<label for="a">Latitude:</label>
-					<input id="a" type="text" maxlength="6" size="6">
-				</p>
-				<p>
-					<label for="b">Longitude:</label>
-					<input id="b" type="text" maxlength="6" size="6">
-				</p>
-				<button class="button button3" type="button" onclick="getCoords()">Enter Coords</button>
-        <button class="button button3" type="button" onclick="clearCoords()">Clear Coords</button>
-			</form>
-		</div>
+
 	</div>
   </body>
 </html>
