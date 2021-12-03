@@ -56,6 +56,8 @@
       href="https://js.arcgis.com/4.21/esri/themes/light/main.css"
     />
     <script src="./assets/Grid_subset.js"></script>
+    <script src="./assets/finegrid.js"></script>
+    <script src="./assets/labels.js"></script>
     <script src="./assets/Sailwind.js"></script>
     <script src="./assets/edge.js"></script>
     <script src="https://js.arcgis.com/4.21/"></script>
@@ -70,11 +72,16 @@ require([
   "esri/widgets/CoordinateConversion"
 ], function(ArcGISMap, MapView, GeoJSONLayer,Graphic, GraphicsLayer, CoordinateConversion) {
 
-
+const labelBlob = new Blob([JSON.stringify(labels)], {
+  type: "application/json"
+});
 const blob = new Blob([JSON.stringify(geojson)], {
   type: "application/json"
 });
 const gridBlob = new Blob([JSON.stringify(gridJson)], {
+  type: "application/json"
+});
+const fGridBlob = new Blob([JSON.stringify(fineGrid)], {
   type: "application/json"
 });
 const edgeBlob = new Blob([JSON.stringify(edgeJson)], {
@@ -82,13 +89,23 @@ const edgeBlob = new Blob([JSON.stringify(edgeJson)], {
 });
 
 
+
+let fGridRenderer = {
+  type: "simple",  
+  symbol:{
+    type: "simple-line",  // autocasts as SimpleLineSymbol()
+    color: [0, 0, 0, 0.9],
+    style: 'long-dash-dot',
+    width: .2
+  }
+};
 let gridRenderer = {
   type: "simple",  
   symbol:{
     type: "simple-line",  // autocasts as SimpleLineSymbol()
     color: [0, 0, 0,.5],
     style: 'solid',
-    width: .5
+    width: 1
   }
 };
 let edgeRenderer = {
@@ -100,7 +117,6 @@ let edgeRenderer = {
     width: 1.5
   }
 };
-
 let renderer = {
   type: "unique-value",  // autocasts as new UniqueValueRenderer()
   field: "Region",
@@ -166,6 +182,11 @@ const grid = new GeoJSONLayer({
     renderer: gridRenderer
 	});
 
+const fGridJsonUrl = URL.createObjectURL(fGridBlob);
+const fGrid = new GeoJSONLayer({ 
+url: fGridJsonUrl,
+  renderer: fGridRenderer
+});
 const edgeJsonUrl = URL.createObjectURL(edgeBlob);
 const edgeGrid = new GeoJSONLayer({ 
 	url: edgeJsonUrl,
@@ -179,7 +200,7 @@ const layer = new GeoJSONLayer({
 	labelingInfo: [labelClass]	});
 
 const map = new ArcGISMap({
-    layers: [layer,grid,edgeGrid]
+    layers: [layer,grid,edgeGrid,fGrid]
   });
 const view = new MapView({
     container: "viewDiv",
@@ -194,6 +215,7 @@ const ccWidget = new CoordinateConversion({
           view: view
         });
 view.ui.add(ccWidget, "bottom-left");
+
 edgeLayer = new GraphicsLayer();
 gridLayer = new GraphicsLayer();
 graphicsLayer = new GraphicsLayer();
@@ -203,8 +225,6 @@ map.add(edgeLayer);
 map.add(gridLayer);
 map.add(graphicsLayer);
 map.add(lineGraphicsLayer);
-
-
 
 point = {
   type: "point", // autocasts as new Point()
