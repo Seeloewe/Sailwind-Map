@@ -1,4 +1,4 @@
-{
+var gridJson={
   "type" : "FeatureCollection",
   "features" : [
     {

@@ -1,4 +1,4 @@
-{
+var edgeJson={
   "type" : "FeatureCollection",
   "features" : [
     {
