@@ -1,0 +1,55 @@
+html,
+body,
+#viewDiv {
+  background: linear-gradient(to top left, #33ccff 0%, #6699ff 100%);
+  border-radius: 25px;
+  padding: 10;
+  margin: 0;
+  height: 98%;
+  width: 99%;
+}
+
+div.B {
+  border-radius: 15px;
+  background-color: lightblue;
+  border-style: ridge;
+  height: 70px;
+  width: 60x;
+  padding-top: 15px;
+  padding-right: 45px;
+  padding-bottom: 35px;
+  padding-left: 15px;
+}
+
+form {
+  display: table;
+}
+
+p {
+  display: table-row;
+}
+
+label {
+  display: table-cell;
+}
+
+input {
+  display: table-cell;
+}
+
+.button {
+  background-color: #c2fdff;
+  border-radius: 5px;
+  border-style: ridge;
+  color: black;
+  padding: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline;
+  font-size: 12px;
+  margin: 0 auto
+}
+
+.button3 {
+  border-radius: 5px;
+}
