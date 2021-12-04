@@ -2658,7 +2658,7 @@ var geojson = {
         "FID" : 19,
         "OBJECTID" : 21,
         "Region" : "Aestrin",
-        "Name" : "Mout Malefic",
+        "Name" : "Mount Malefic",
         "SHAPE_Leng" : 0.39060032116400001,
         "SHAPE_Area" : 0.0097286173052599997,
         "Latitude" : 39.904098510742188,
