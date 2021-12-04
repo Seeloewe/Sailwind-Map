@@ -217,7 +217,9 @@
     view.graphics.add(polylineGraphic);
     view.graphics.add(pointGraphic);
 
-    sailwindMap = new SailwindMap(polylineGraphic, lineGraphicsLayer, pointGraphic, graphicsLayer);
+    sailwindMap = new SailwindMap(polylineGraphic, lineGraphicsLayer, pointGraphic, graphicsLayer, []);
+
+    sailwindMap.load();
 
     view.on("click", setCoordsFromClick);
   });
@@ -247,6 +249,14 @@
    */
   window.clearMap = function clearMap() {
     sailwindMap?.clear();
+  }
+
+  window.saveMap = function saveMap() {
+    sailwindMap?.save();
+  }
+
+  window.endTrip = function endTrip() {
+    sailwindMap?.endCurrentTrip();
   }
   //#endregion Event Handlers
 

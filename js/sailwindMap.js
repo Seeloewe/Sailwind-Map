@@ -1,11 +1,44 @@
 class SailwindMap {
 
-  constructor(polylineGraphic, lineLayer, pointGraphic, pointLayer) {
+  constructor(polylineGraphic, lineLayer, pointGraphic, pointLayer, sailwindTrips) {
     this._polylineGraphic = polylineGraphic.clone();
     this._pointGraphic = pointGraphic.clone();
     this._lineLayer = lineLayer;
     this._pointLayer = pointLayer;
-    this._fullSailwindPath = [];
+    /** @type {SailwindTripLog} */
+    this._sailwindTripLog = new SailwindTripLog(sailwindTrips);
+  }
+
+  get canSave() {
+    return !!window.localStorage;
+  }
+
+  save() {
+    if (!this.canSave)
+      return;
+
+    this._saveTimeoutId = setTimeout(() => {
+      window.localStorage.setItem("sailwindTripLog", JSON.stringify(this._sailwindTripLog));
+    }, 2000);
+  }
+
+  load() {
+    if (!this.canSave)
+      return;
+    
+    const tripLogFromStorage = JSON.parse(window.localStorage.getItem("sailwindTripLog"));
+
+    console.debug("loaded", tripLogFromStorage);
+
+    this._sailwindTripLog = new SailwindTripLog(tripLogFromStorage);
+
+    for (let i = 0; i < this._sailwindTripLog.length; i++)
+    {
+      const sailwindTrip = this._sailwindTripLog[i];
+      for (let j = 0; j < sailwindTrip.path.length; j++) {
+        this._drawPointOnMap(sailwindTrip.path[j - 1], sailwindTrip.path[j], j > 0);
+      }
+    }
   }
 
   /**
@@ -26,7 +59,28 @@ class SailwindMap {
    * The second last sailwind point in the whole path.
    */
   get prevSailwindPoint() {
-    return this._fullSailwindPath[this._fullSailwindPath.length - 2];
+    const lastSailwindTrip = this._sailwindTripLog.currentTrip;
+    return lastSailwindTrip.path[lastSailwindTrip.path.length - 2];
+  }
+
+  /** 
+   * Add a new trip to the log.
+   * Make sure the previous trip has ended.
+   */
+  addNewTrip() {
+    if (!this.currentTripEnded)
+      throw new Error("Last trip has not ended. Finish it first.")
+
+    this._sailwindTripLog.push(new SailwindTrip());
+  }
+
+  endCurrentTrip() {
+    if (this._sailwindTripLog.currentTrip)
+      this._sailwindTripLog.currentTrip.ended = true;
+  }
+
+  get currentTripEnded() {
+    return this._sailwindTripLog.currentTrip?.ended ?? true;
   }
 
   /**
@@ -47,12 +101,20 @@ class SailwindMap {
    * @param {SailwindPoint} sailwindPoint - A single Sailwind point. 
    */
   drawPoint(sailwindPoint) {
-    this._fullSailwindPath.push(sailwindPoint);
+    if (this.currentTripEnded)
+      this.addNewTrip();
+    
+    this._sailwindTripLog.currentTrip.add(sailwindPoint);
+
+    this._drawPointOnMap(this.prevSailwindPoint, sailwindPoint);
+  }
+
+  _drawPointOnMap(prevSailwindPoint, sailwindPoint) {
     const pointGraphic = this.createPointGraphic(sailwindPoint);
     this._pointLayer.add(pointGraphic);
-    console.debug("Drawn point graphic", pointGraphic);
-    if (this.prevSailwindPoint)
-      this.drawPolyline([this.prevSailwindPoint, sailwindPoint]);
+
+    if (prevSailwindPoint)
+      this.drawPolyline([prevSailwindPoint, sailwindPoint]);
   }
 
   /**
@@ -98,6 +160,6 @@ class SailwindMap {
   clear() {
     this._lineLayer.removeAll();
     this._pointLayer.removeAll();
-    this._fullSailwindPath = [];
+    this._sailwindTripLog = new SailwindTripLog();
   }
 }

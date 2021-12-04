@@ -12,7 +12,10 @@ class SailwindRepository {
 
   }
 
-  selectAllPoints() /* : SailwindPoint */
+  /**
+   * Select all existing sailwind points.
+   */
+  selectAllPoints()
   {
 
   }
