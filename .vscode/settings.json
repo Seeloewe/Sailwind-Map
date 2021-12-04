@@ -1,7 +1,0 @@
-{
-    "typescript.preferences.quoteStyle": "double",
-    "typescript.format.semicolons": "insert",
-    "editor.tabSize": 2,
-    "editor.detectIndentation": false,
-    "html.format.indentInnerHtml": true
-}
