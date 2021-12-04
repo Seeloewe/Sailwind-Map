@@ -1,10 +1,8 @@
 <html>
+
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="initial-scale=1,maximum-scale=1,user-scalable=no"
-    />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
     <title>Sailwind Map</title>
 
     <style>
@@ -12,49 +10,61 @@
       body,
       #viewDiv {
         background: linear-gradient(to top left, #33ccff 0%, #6699ff 100%);
-		    border-radius: 25px;
+        border-radius: 25px;
         padding: 10;
         margin: 0;
         height: 98%;
         width: 99%;
       }
-    </style>
-	  <style>
-        div.B{
-			border-radius: 15px;
-			background-color: lightblue;;
-			border-style: ridge;
-			height: 70px;
-			width:60x;
-			padding-top: 15px;
-			padding-right: 45px;
-			padding-bottom: 35px;
-			padding-left: 15px;
-        }
-		form  { display: table;      }
-		p     { display: table-row;  }
-		label { display: table-cell; }
-		input { display: table-cell; }
-		.button {
-		  background-color: #c2fdff;
-		  border-radius: 5px;
-		  border-style: ridge;
-		  color: black;
-		  padding: 5px;
-		  text-align: center;
-		  text-decoration: none;
-		  display: inline;
-		  font-size: 12px;
-		  margin: 0 auto
-		};
 
-		.button3 {border-radius: 5px;}
+      div.B {
+        border-radius: 15px;
+        background-color: lightblue;
+        ;
+        border-style: ridge;
+        height: 70px;
+        width: 60x;
+        padding-top: 15px;
+        padding-right: 45px;
+        padding-bottom: 35px;
+        padding-left: 15px;
+      }
+
+      form {
+        display: table;
+      }
+
+      p {
+        display: table-row;
+      }
+
+      label {
+        display: table-cell;
+      }
+
+      input {
+        display: table-cell;
+      }
+
+      .button {
+        background-color: #c2fdff;
+        border-radius: 5px;
+        border-style: ridge;
+        color: black;
+        padding: 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline;
+        font-size: 12px;
+        margin: 0 auto
+      }
+
+      .button3 {
+        border-radius: 5px;
+      }
     </style>
 
-    <link
-      rel="stylesheet"
-      href="https://js.arcgis.com/4.21/esri/themes/light/main.css"
-    />
+    <link rel="stylesheet" href="https://js.arcgis.com/4.21/esri/themes/light/main.css" />
     <script src="./assets/Grid_subset.js"></script>
     <script src="./assets/finegrid.js"></script>
     <script src="./assets/labels.js"></script>
@@ -62,303 +72,304 @@
     <script src="./assets/edge.js"></script>
     <script src="https://js.arcgis.com/4.21/"></script>
     <script>
-  var path=[];
-require([
-  "esri/Map",
-  "esri/views/MapView",
-  "esri/layers/GeoJSONLayer",
-  "esri/Graphic",
-  "esri/layers/GraphicsLayer",
-  "esri/widgets/CoordinateConversion"
-], function(ArcGISMap, MapView, GeoJSONLayer,Graphic, GraphicsLayer, CoordinateConversion) {
+      var path = [];
+      require([
+        "esri/Map",
+        "esri/views/MapView",
+        "esri/layers/GeoJSONLayer",
+        "esri/Graphic",
+        "esri/layers/GraphicsLayer",
+        "esri/widgets/CoordinateConversion"
+      ], function (ArcGISMap, MapView, GeoJSONLayer, Graphic, GraphicsLayer, CoordinateConversion) {
 
-const labelBlob = new Blob([JSON.stringify(labels)], {
-  type: "application/json"
-});
-const blob = new Blob([JSON.stringify(geojson)], {
-  type: "application/json"
-});
-const gridBlob = new Blob([JSON.stringify(gridJson)], {
-  type: "application/json"
-});
-const fGridBlob = new Blob([JSON.stringify(fineGrid)], {
-  type: "application/json"
-});
-const edgeBlob = new Blob([JSON.stringify(edgeJson)], {
-  type: "application/json"
-});
-
-
-
-let fGridRenderer = {
-  type: "simple",  
-  symbol:{
-    type: "simple-line",  // autocasts as SimpleLineSymbol()
-    color: [0, 0, 0, 0.9],
-    style: 'long-dash-dot',
-    width: .2
-  }
-};
-let gridRenderer = {
-  type: "simple",  
-  symbol:{
-    type: "simple-line",  // autocasts as SimpleLineSymbol()
-    color: [0, 0, 0,.5],
-    style: 'solid',
-    width: 1
-  }
-};
-let edgeRenderer = {
-  type: "simple",  
-  symbol:{
-    type: "simple-line",  // autocasts as SimpleLineSymbol()
-    color: [0, 0, 0,.5],
-    style: 'solid',
-    width: 1.5
-  }
-};
-let renderer = {
-  type: "unique-value",  // autocasts as new UniqueValueRenderer()
-  field: "Region",
-  defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
-  uniqueValueInfos: [{
-    // All features with value of "North" will be blue
-    value: "Emerald Archipelago",
-    symbol: {
-      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-      color: "green"
-    }
-  }, {
-    // All features with value of "East" will be green
-    value: "Al'Ankh",
-    symbol: {
-      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-      color: "orange"
-    }
-  }, {
-    // All features with value of "South" will be red
-    value: "Happy Bay",
-    symbol: {
-      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-      color: "grey"
-    }
-  }, {
-    // All features with value of "West" will be yellow
-    value: "Aestrin",
-    symbol: {
-      type: "simple-fill",  // autocasts as new SimpleFillSymbol()
-      color: "lightgreen"
-    }
-  }, {
-    value: "City",
-    symbol: {
-      type: "simple-fill",
-      color: "red"
-    }
-  }],
-  visualVariables: [{
-    type: "opacity",
-    field: "POPULATION",
-    normalizationField: "SQ_KM",
-    // features with 30 ppl/sq km or below are assigned the first opacity value
-    stops: [{ value: 100, opacity: 0.15 },
-            { value: 1000, opacity: 0.90 }]
-  }]
-};
-
-const labelClass = {
-  // autocasts as new LabelClass()
-  symbol: {
-    type: "text",  // autocasts as new TextSymbol()
-    color: "black",
-    font: {  // autocast as new Font()
-      family: "Playfair Display",
-      size: 10,
-      weight: "bold"
-    }
-  },
-  labelPlacement: "above-center",
-  labelExpressionInfo: {
-    expression: "$feature.name"
-  }
-};
-const gridJsonUrl = URL.createObjectURL(gridBlob);
-const grid = new GeoJSONLayer({ 
-	url: gridJsonUrl,
-    renderer: gridRenderer
-	});
-
-const fGridJsonUrl = URL.createObjectURL(fGridBlob);
-const fGrid = new GeoJSONLayer({ 
-url: fGridJsonUrl,
-  renderer: fGridRenderer
-});
-const edgeJsonUrl = URL.createObjectURL(edgeBlob);
-const edgeGrid = new GeoJSONLayer({ 
-	url: edgeJsonUrl,
-    renderer: edgeRenderer
-	});
-
-const geojsonUrl = URL.createObjectURL(blob);
-const layer = new GeoJSONLayer({ 
-	url: geojsonUrl,
-    renderer: renderer,
-	labelingInfo: [labelClass]	});
-
-const map = new ArcGISMap({
-    layers: [layer,grid,edgeGrid,fGrid]
-  });
-const view = new MapView({
-    container: "viewDiv",
-    map: map,
-    center: [0, 35],
-    zoom: 4
-  });
-
-view.ui._removeComponents(["attribution"]);
-
-const ccWidget = new CoordinateConversion({
-          view: view
+        const labelBlob = new Blob([JSON.stringify(labels)], {
+          type: "application/json"
         });
-view.ui.add(ccWidget, "bottom-left");
+        const blob = new Blob([JSON.stringify(geojson)], {
+          type: "application/json"
+        });
+        const gridBlob = new Blob([JSON.stringify(gridJson)], {
+          type: "application/json"
+        });
+        const fGridBlob = new Blob([JSON.stringify(fineGrid)], {
+          type: "application/json"
+        });
+        const edgeBlob = new Blob([JSON.stringify(edgeJson)], {
+          type: "application/json"
+        });
 
-edgeLayer = new GraphicsLayer();
-gridLayer = new GraphicsLayer();
-graphicsLayer = new GraphicsLayer();
-lineGraphicsLayer = new GraphicsLayer();
 
-map.add(edgeLayer);
-map.add(gridLayer);
-map.add(graphicsLayer);
-map.add(lineGraphicsLayer);
 
-point = {
-  type: "point", // autocasts as new Point()
-  longitude: 0,
-  latitude: 0
-};
-polyline = {
-          type: "polyline", // autocasts as new Polyline()
-          paths: [[0,0]]
+        let fGridRenderer = {
+          type: "simple",
+          symbol: {
+            type: "simple-line",  // autocasts as SimpleLineSymbol()
+            color: [0, 0, 0, 0.9],
+            style: 'long-dash-dot',
+            width: .2
+          }
+        };
+        let gridRenderer = {
+          type: "simple",
+          symbol: {
+            type: "simple-line",  // autocasts as SimpleLineSymbol()
+            color: [0, 0, 0, .5],
+            style: 'solid',
+            width: 1
+          }
+        };
+        let edgeRenderer = {
+          type: "simple",
+          symbol: {
+            type: "simple-line",  // autocasts as SimpleLineSymbol()
+            color: [0, 0, 0, .5],
+            style: 'solid',
+            width: 1.5
+          }
+        };
+        let renderer = {
+          type: "unique-value",  // autocasts as new UniqueValueRenderer()
+          field: "Region",
+          defaultSymbol: { type: "simple-fill" },  // autocasts as new SimpleFillSymbol()
+          uniqueValueInfos: [{
+            // All features with value of "North" will be blue
+            value: "Emerald Archipelago",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color: "green"
+            }
+          }, {
+            // All features with value of "East" will be green
+            value: "Al'Ankh",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color: "orange"
+            }
+          }, {
+            // All features with value of "South" will be red
+            value: "Happy Bay",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color: "grey"
+            }
+          }, {
+            // All features with value of "West" will be yellow
+            value: "Aestrin",
+            symbol: {
+              type: "simple-fill",  // autocasts as new SimpleFillSymbol()
+              color: "lightgreen"
+            }
+          }, {
+            value: "City",
+            symbol: {
+              type: "simple-fill",
+              color: "red"
+            }
+          }],
+          visualVariables: [{
+            type: "opacity",
+            field: "POPULATION",
+            normalizationField: "SQ_KM",
+            // features with 30 ppl/sq km or below are assigned the first opacity value
+            stops: [{ value: 100, opacity: 0.15 },
+            { value: 1000, opacity: 0.90 }]
+          }]
         };
 
-		// Create a symbol for drawing the point
-const markerSymbol = {
-  type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
-  style: "x",
-  color: [226, 119, 40],
-  outline: {
-	// autocasts as new SimpleLineSymbol()
-	color: [255, 125, 0],
-	width: 2
-  }
-};
+        const labelClass = {
+          // autocasts as new LabelClass()
+          symbol: {
+            type: "text",  // autocasts as new TextSymbol()
+            color: "black",
+            font: {  // autocast as new Font()
+              family: "Playfair Display",
+              size: 10,
+              weight: "bold"
+            }
+          },
+          labelPlacement: "above-center",
+          labelExpressionInfo: {
+            expression: "$feature.name"
+          }
+        };
+        const gridJsonUrl = URL.createObjectURL(gridBlob);
+        const grid = new GeoJSONLayer({
+          url: gridJsonUrl,
+          renderer: gridRenderer
+        });
 
-let polylineSymbol = {
-  type: "simple-line",  // autocasts as SimpleLineSymbol()
-  color: [255, 255, 0],
-  style: 'dash-dot',
-  width: 2
-};
+        const fGridJsonUrl = URL.createObjectURL(fGridBlob);
+        const fGrid = new GeoJSONLayer({
+          url: fGridJsonUrl,
+          renderer: fGridRenderer
+        });
+        const edgeJsonUrl = URL.createObjectURL(edgeBlob);
+        const edgeGrid = new GeoJSONLayer({
+          url: edgeJsonUrl,
+          renderer: edgeRenderer
+        });
 
-polylineGraphic = new Graphic({
-  geometry: polyline,
-  symbol: polylineSymbol
-});
+        const geojsonUrl = URL.createObjectURL(blob);
+        const layer = new GeoJSONLayer({
+          url: geojsonUrl,
+          renderer: renderer,
+          labelingInfo: [labelClass]
+        });
 
-pointGraphic = new Graphic({
-	  geometry: point,
-	  symbol: markerSymbol
-	});
+        const map = new ArcGISMap({
+          layers: [layer, grid, edgeGrid, fGrid]
+        });
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          center: [0, 35],
+          zoom: 4
+        });
 
-view.graphics.add(polylineGraphic)
-view.graphics.add(pointGraphic)  
+        view.ui._removeComponents(["attribution"]);
 
-view.on("click",function(event){
-  var lat=event.mapPoint.y;
-	var long=event.mapPoint.x;
-  var newPointGraphic=pointGraphic.clone();
-  var newLineGraphic=polylineGraphic.clone();
-  newPointGraphic.geometry.latitude=lat;
-  newPointGraphic.geometry.longitude=long;
-  path.push([long,lat])
-  newLineGraphic.geometry.paths=path;
-  graphicsLayer.add(newPointGraphic);
-  lineGraphicsLayer.add(newLineGraphic);
-});
+        const ccWidget = new CoordinateConversion({
+          view: view
+        });
+        view.ui.add(ccWidget, "bottom-left");
 
-});
+        edgeLayer = new GraphicsLayer();
+        gridLayer = new GraphicsLayer();
+        graphicsLayer = new GraphicsLayer();
+        lineGraphicsLayer = new GraphicsLayer();
 
-function getCoords(){
-	var lat=document.getElementById("a").value;
-	var long=document.getElementById("b").value;
-  var newPointGraphic=pointGraphic.clone();
-  var newLineGraphi=polylineGraphic.clone();
-  newPointGraphic.geometry.latitude=lat;
-  newPointGraphic.geometry.longitude=long;
+        map.add(edgeLayer);
+        map.add(gridLayer);
+        map.add(graphicsLayer);
+        map.add(lineGraphicsLayer);
 
-    
-  path.push([long,lat])
-  newLineGraphi.geometry.paths=path;
+        point = {
+          type: "point", // autocasts as new Point()
+          longitude: 0,
+          latitude: 0
+        };
+        polyline = {
+          type: "polyline", // autocasts as new Polyline()
+          paths: [[0, 0]]
+        };
 
-  lineGraphicsLayer.add(newLineGraphi);
-  graphicsLayer.add(newPointGraphic);
-  document.getElementById("a").value=null;
-	document.getElementById("b").value=null;  
-};
+        // Create a symbol for drawing the point
+        const markerSymbol = {
+          type: "simple-marker", // autocasts as new SimpleMarkerSymbol()
+          style: "x",
+          color: [226, 119, 40],
+          outline: {
+            // autocasts as new SimpleLineSymbol()
+            color: [255, 125, 0],
+            width: 2
+          }
+        };
 
-function clearCoords(){
-  coords =[]
-  graphicsLayer.removeAll();
-  lineGraphicsLayer.removeAll();
-  path=[]
-}
+        let polylineSymbol = {
+          type: "simple-line",  // autocasts as SimpleLineSymbol()
+          color: [255, 255, 0],
+          style: 'dash-dot',
+          width: 2
+        };
+
+        polylineGraphic = new Graphic({
+          geometry: polyline,
+          symbol: polylineSymbol
+        });
+
+        pointGraphic = new Graphic({
+          geometry: point,
+          symbol: markerSymbol
+        });
+
+        view.graphics.add(polylineGraphic)
+        view.graphics.add(pointGraphic)
+
+        view.on("click", function (event) {
+          var lat = event.mapPoint.y;
+          var long = event.mapPoint.x;
+          var newPointGraphic = pointGraphic.clone();
+          var newLineGraphic = polylineGraphic.clone();
+          newPointGraphic.geometry.latitude = lat;
+          newPointGraphic.geometry.longitude = long;
+          path.push([long, lat])
+          newLineGraphic.geometry.paths = path;
+          graphicsLayer.add(newPointGraphic);
+          lineGraphicsLayer.add(newLineGraphic);
+        });
+
+      });
+
+      function getCoords() {
+        var lat = document.getElementById("a").value;
+        var long = document.getElementById("b").value;
+        var newPointGraphic = pointGraphic.clone();
+        var newLineGraphi = polylineGraphic.clone();
+        newPointGraphic.geometry.latitude = lat;
+        newPointGraphic.geometry.longitude = long;
 
 
-function toRadians(degrees) {
-  return degrees * Math.PI / 180;
-};
- 
-// Converts from radians to degrees.
-function toDegrees(radians) {
-  return radians * 180 / Math.PI;
-}
+        path.push([long, lat])
+        newLineGraphi.geometry.paths = path;
+
+        lineGraphicsLayer.add(newLineGraphi);
+        graphicsLayer.add(newPointGraphic);
+        document.getElementById("a").value = null;
+        document.getElementById("b").value = null;
+      };
+
+      function clearCoords() {
+        coords = []
+        graphicsLayer.removeAll();
+        lineGraphicsLayer.removeAll();
+        path = []
+      }
 
 
-function bearing(startLat, startLng, destLat, destLng){
-  startLat = toRadians(startLat);
-  startLng = toRadians(startLng);
-  destLat = toRadians(destLat);
-  destLng = toRadians(destLng);
+      function toRadians(degrees) {
+        return degrees * Math.PI / 180;
+      };
 
-  y = Math.sin(destLng - startLng) * Math.cos(destLat);
-  x = Math.cos(startLat) * Math.sin(destLat) -
-        Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
-  brng = Math.atan2(y, x);
-  brng = toDegrees(brng);
-  return (brng + 360) % 360;
-}
+      // Converts from radians to degrees.
+      function toDegrees(radians) {
+        return radians * 180 / Math.PI;
+      }
 
-</script>
+      function bearing(startLat, startLng, destLat, destLng) {
+        startLat = toRadians(startLat);
+        startLng = toRadians(startLng);
+        destLat = toRadians(destLat);
+        destLng = toRadians(destLng);
+
+        y = Math.sin(destLng - startLng) * Math.cos(destLat);
+        x = Math.cos(startLat) * Math.sin(destLat) -
+          Math.sin(startLat) * Math.cos(destLat) * Math.cos(destLng - startLng);
+        brng = Math.atan2(y, x);
+        brng = toDegrees(brng);
+        return (brng + 360) % 360;
+      }
+
+    </script>
   </head>
 
   <body>
-    <div class="A" id="viewDiv" style="background-color:#006994;">	
-		<div class="B">	
-			<form>
-				<p>
-					<label for="a">Latitude:</label>
-					<input id="a" type="text" maxlength="6" size="6">
-				</p>
-				<p>
-					<label for="b">Longitude:</label>
-					<input id="b" type="text" maxlength="6" size="6">
-				</p>
-				<button class="button button3" type="button" onclick="getCoords()">Enter Coords</button>
-        <button class="button button3" type="button" onclick="clearCoords()">Clear Coords</button>
-			</form>
-		</div>
+    <div class="A" id="viewDiv" style="background-color:#006994;">
+      <div class="B">
+        <form>
+          <p>
+            <label for="a">Latitude:</label>
+            <input id="a" type="text" maxlength="6" size="6">
+          </p>
+          <p>
+            <label for="b">Longitude:</label>
+            <input id="b" type="text" maxlength="6" size="6">
+          </p>
+          <button class="button button3" type="button" onclick="getCoords()">Enter Coords</button>
+          <button class="button button3" type="button" onclick="clearCoords()">Clear Coords</button>
+        </form>
+      </div>
 
-	</div>
+    </div>
   </body>
+  
 </html>
