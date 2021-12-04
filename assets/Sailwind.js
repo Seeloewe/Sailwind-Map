@@ -544,7 +544,7 @@ var geojson = {
 				"FID": 1,
 				"OBJECTID": 2,
 				"Region": "Al'Ankh",
-				"Name": "Gold Rock City",
+				"Name": "",
 				"SHAPE_Leng": 0.0933439672747,
 				"SHAPE_Area": 0.000377517534703,
 				"Latitude": 31.047199249267578,
@@ -749,7 +749,7 @@ var geojson = {
 				"FID": 2,
 				"OBJECTID": 3,
 				"Region": "Al'Ankh",
-				"Name": "Gold Rock City",
+				"Name": "",
 				"SHAPE_Leng": 0.203537627,
 				"SHAPE_Area": 0.00124219744339,
 				"Latitude": 31.068899154663086,
@@ -1000,7 +1000,7 @@ var geojson = {
 				"FID": 5,
 				"OBJECTID": 6,
 				"Region": "Al'Ankh",
-				"Name": "Alchemist's Island",
+				"Name": "",
 				"SHAPE_Leng": 0.00753829374013,
 				"SHAPE_Area": 0.00000401084386525,
 				"Latitude": 30.66119956970215,
@@ -1129,7 +1129,7 @@ var geojson = {
 				"FID": 6,
 				"OBJECTID": 7,
 				"Region": "Al'Ankh",
-				"Name": "Alchemist's Island",
+				"Name": "",
 				"SHAPE_Leng": 0.0693084388507,
 				"SHAPE_Area": 0.000227660107537,
 				"Latitude": 30.655899047851562,
@@ -4862,7 +4862,7 @@ var geojson = {
 				"FID": 37,
 				"OBJECTID": 40,
 				"Region": "Emerald Archipelago",
-				"Name": "Dragon Cliffs",
+				"Name": "",
 				"SHAPE_Leng": 0.0991825171943,
 				"SHAPE_Area": 0.000739776208037,
 				"Latitude": 31.328100204467773,
@@ -4911,7 +4911,7 @@ var geojson = {
 				"FID": 38,
 				"OBJECTID": 41,
 				"Region": "Emerald Archipelago",
-				"Name": "Dragon Cliffs",
+				"Name": "",
 				"SHAPE_Leng": 0.0316625297976,
 				"SHAPE_Area": 0.0000621585447034,
 				"Latitude": 31.307100296020508,
@@ -4968,7 +4968,7 @@ var geojson = {
 				"FID": 39,
 				"OBJECTID": 42,
 				"Region": "Emerald Archipelago",
-				"Name": "Dragon Cliffs",
+				"Name": "",
 				"SHAPE_Leng": 0.0411386472836,
 				"SHAPE_Area": 0.000121231824074,
 				"Latitude": 31.290800094604492,
@@ -5205,7 +5205,7 @@ var geojson = {
 				"FID": 40,
 				"OBJECTID": 43,
 				"Region": "Emerald Archipelago",
-				"Name": "Dragon Cliffs",
+				"Name": "",
 				"SHAPE_Leng": 0.365524647074,
 				"SHAPE_Area": 0.00533687632216,
 				"Latitude": 31.351200103759766,
@@ -5254,7 +5254,7 @@ var geojson = {
 				"FID": 41,
 				"OBJECTID": 44,
 				"Region": "Emerald Archipelago",
-				"Name": "Dragon Cliffs",
+				"Name": "",
 				"SHAPE_Leng": 0.019528542135,
 				"SHAPE_Area": 0.0000255224883784,
 				"Latitude": 31.353900909423828,
@@ -5428,7 +5428,7 @@ var geojson = {
 				"FID": 43,
 				"OBJECTID": 46,
 				"Region": "Emerald Archipelago",
-				"Name": "Sage Hils",
+				"Name": "",
 				"SHAPE_Leng": 0.120208770417,
 				"SHAPE_Area": 0.000924138244694,
 				"Latitude": 30.890899658203125,
@@ -5932,7 +5932,7 @@ var geojson = {
 				"FID": 47,
 				"OBJECTID": 50,
 				"Region": "Emerald Archipelago",
-				"Name": "New Port",
+				"Name": "",
 				"SHAPE_Leng": 0.0929037286285,
 				"SHAPE_Area": 0.000495849889463,
 				"Latitude": 32.05440139770508,
@@ -6025,7 +6025,7 @@ var geojson = {
 				"FID": 48,
 				"OBJECTID": 51,
 				"Region": "Emerald Archipelago",
-				"Name": "New Port",
+				"Name": "",
 				"SHAPE_Leng": 0.105196905422,
 				"SHAPE_Area": 0.000670252507454,
 				"Latitude": 32.12080001831055,
@@ -6098,7 +6098,7 @@ var geojson = {
 				"FID": 49,
 				"OBJECTID": 52,
 				"Region": "Emerald Archipelago",
-				"Name": "Serpent Isle",
+				"Name": "",
 				"SHAPE_Leng": 0.107401020527,
 				"SHAPE_Area": 0.000540395574976,
 				"Latitude": 31.683000564575195,
@@ -6244,7 +6244,7 @@ var geojson = {
 				"FID": 51,
 				"OBJECTID": 54,
 				"Region": "Emerald Archipelago",
-				"Name": "Serpent Isle",
+				"Name": "",
 				"SHAPE_Leng": 0.0419791500059,
 				"SHAPE_Area": 0.000111246214267,
 				"Latitude": 31.80229949951172,
@@ -6297,7 +6297,7 @@ var geojson = {
 				"FID": 52,
 				"OBJECTID": 55,
 				"Region": "Emerald Archipelago",
-				"Name": "Serpent Isle",
+				"Name": "",
 				"SHAPE_Leng": 0.0363790973227,
 				"SHAPE_Area": 0.0000939068416346,
 				"Latitude": 31.766700744628906,
@@ -6313,7 +6313,7 @@ var geojson = {
 				"fill": "#555555",
 				"fill-opacity": 0.5,
 				"Region": "City",
-				"Name": "Port",
+				"Name": "",
 				"FID": 53,
 				"OBJECTID": 56
 			},
@@ -6365,7 +6365,7 @@ var geojson = {
 			"type": "Feature",
 			"properties": {
 				"Region": "City",
-				"Name": "Port",
+				"Name": "",
 				"FID": 54,
 				"OBJECTID": 57
 			},
@@ -6405,7 +6405,7 @@ var geojson = {
 			"type": "Feature",
 			"properties": {
 				"Region": "City",
-				"Name": "Port",
+				"Name": "",
 				"FID": 55,
 				"OBJECTID": 58
 			},
@@ -6459,7 +6459,7 @@ var geojson = {
 				"FID": 56,
 				"OBJECTID": 59,
 				"Region": "City",
-				"Name": "Port"
+				"Name": ""
 			},
 			"geometry": {
 				"type": "Polygon",
@@ -6515,7 +6515,7 @@ var geojson = {
 				"FID": 57,
 				"OBJECTID": 60,
 				"Region": "City",
-				"Name": "Port"
+				"Name": ""
 			},
 			"geometry": {
 				"type": "Polygon",
@@ -6599,7 +6599,7 @@ var geojson = {
 				"FID": 59,
 				"OBJECTID": 62,
 				"Region": "City",
-				"Name": "Port"
+				"Name": ""
 			},
 			"geometry": {
 				"type": "Polygon",
@@ -6691,7 +6691,7 @@ var geojson = {
 				"FID": 60,
 				"OBJECTID": 63,
 				"Region": "City",
-				"Name": "Port"
+				"Name": ""
 			},
 			"geometry": {
 				"type": "Polygon",
@@ -6739,7 +6739,7 @@ var geojson = {
 				"FID": 61,
 				"OBJECTID": 64,
 				"Region": "City",
-				"Name": "Port"
+				"Name": ""
 			},
 			"geometry": {
 				"type": "Polygon",
